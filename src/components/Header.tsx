@@ -41,7 +41,7 @@ export default function Header() {
       </nav>
 
       <Link
-        to="/perfil"
+        to="/login"
         className="flex h-[54px] shrink-0 items-center gap-3 rounded-full bg-[#0b925f] px-[26px] text-[17px] font-bold text-white shadow-sm transition hover:brightness-105"
       >
         <svg

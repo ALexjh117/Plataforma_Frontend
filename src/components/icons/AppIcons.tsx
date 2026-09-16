@@ -119,6 +119,61 @@ export function LogoutIcon(props: IconProps) {
   )
 }
 
+export function LockIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+    </BaseIcon>
+  )
+}
+
+export function EyeIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="2.4" />
+    </BaseIcon>
+  )
+}
+
+export function EyeOffIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M3 3 21 21" />
+      <path d="M9.9 5.2C10.6 5 11.3 5 12 5c6 0 9.5 7 9.5 7a16 16 0 0 1-3.2 3.8" />
+      <path d="M6.5 7.4A16 16 0 0 0 2.5 12s3.5 6.5 9.5 6.5c1.1 0 2.1-.2 3.1-.5" />
+    </BaseIcon>
+  )
+}
+
+export function TrashIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M5 7h14" />
+      <path d="M10 7V5h4v2" />
+      <path d="M8 7v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7" />
+    </BaseIcon>
+  )
+}
+
+export function PlusIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M12 5v14M5 12h14" />
+    </BaseIcon>
+  )
+}
+
+export function SearchIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <circle cx="11" cy="11" r="6" />
+      <path d="m20 20-3.5-3.5" />
+    </BaseIcon>
+  )
+}
+
 const NAV_ICONS = {
   home: HomeIcon,
   inventory: InventoryIcon,

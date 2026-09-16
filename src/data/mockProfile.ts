@@ -1,15 +1,18 @@
-import { IMG } from '../constants/images'
 import type { UserProfile } from '../types/profile'
 
 export const mockProfile: UserProfile = {
-  fullName: 'Carlos Pérez',
-  roleLabel: 'Aprendiz SENA',
-  location: 'Centro de Formación, Centro Agroindustrial — Regional Tolima',
-  avatarUrl: IMG.profileAvatar,
-  documentId: '1234567890',
-  email: 'carlos.perez@sena.edu.co',
-  phone: '3001234567',
-  trainingCenter: 'Centro Agroindustrial',
-  groupCode: '1234567',
-  role: 'Aprendiz',
+  id: 1,
+  fullName: 'Carlos Perez',
+  roleLabel: 'Administrador',
+  location: 'Centro de Comercio y Servicios — Regional Cauca',
+  avatarUrl: '',
+  documentType: 'CC',
+  documentId: '1001001001',
+  email: 'carlos@correo.com',
+  phone: '',
+  address: '',
+  trainingCenter: 'Centro de Comercio y Servicios',
+  groupCode: '',
+  role: 'Administrador',
+  initials: 'CP',
 }

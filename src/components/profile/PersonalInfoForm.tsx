@@ -1,73 +1,105 @@
 import type { FormEvent } from 'react'
-import type { ProfileFieldName, UserProfile } from '../../types/profile'
+import type { ProfileDraft } from '../../types/profile'
 import Button from '../ui/Button'
-import TextField from '../ui/TextField'
-
-type FieldConfig = {
-  name: ProfileFieldName
-  label: string
-  type: 'text' | 'email' | 'tel'
-  autoComplete?: string
-}
-
-const FIELDS: FieldConfig[] = [
-  { name: 'documentId', label: 'Documento', type: 'text', autoComplete: 'off' },
-  { name: 'email', label: 'Correo electrónico', type: 'email', autoComplete: 'email' },
-  { name: 'phone', label: 'Teléfono', type: 'tel', autoComplete: 'tel' },
-  { name: 'trainingCenter', label: 'Centro de formación', type: 'text' },
-  { name: 'groupCode', label: 'Ficha', type: 'text' },
-  { name: 'role', label: 'Rol', type: 'text' },
-]
 
 type PersonalInfoFormProps = {
-  value: UserProfile
+  value: ProfileDraft
   isEditing: boolean
   saveMessage: string | null
-  onChange: (name: ProfileFieldName, value: string) => void
+  errorMessage: string | null
+  isSaving: boolean
+  onChange: (name: keyof ProfileDraft, value: string) => void
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  onEdit: () => void
+  onCancel: () => void
 }
+
+const ROWS: Array<{ name: keyof ProfileDraft; label: string; editable: boolean; type?: string }> = [
+  { name: 'documentId', label: 'Documento', editable: true },
+  { name: 'email', label: 'Correo electrónico', editable: true, type: 'email' },
+  { name: 'phone', label: 'Teléfono', editable: false, type: 'tel' },
+  { name: 'address', label: 'Dirección', editable: false },
+]
 
 export default function PersonalInfoForm({
   value,
   isEditing,
   saveMessage,
+  errorMessage,
+  isSaving,
   onChange,
   onSubmit,
+  onEdit,
+  onCancel,
 }: PersonalInfoFormProps) {
   return (
-    <form onSubmit={onSubmit} className="mt-8">
-      <h3 className="text-lg font-semibold text-sena-text">Información personal</h3>
+    <form onSubmit={onSubmit} className="mt-6">
+      <h3 className="text-base font-semibold text-sena-text">Información personal</h3>
 
       {saveMessage ? (
-        <p
-          role="status"
-          className="mt-3 rounded-lg bg-sena/10 px-3 py-2 text-sm font-medium text-sena-dark"
-        >
+        <p role="status" className="mt-3 rounded-lg bg-sena/10 px-3 py-2 text-sm font-medium text-sena-dark">
           {saveMessage}
         </p>
       ) : null}
 
-      <div className="mt-5 grid grid-cols-1 gap-x-8 gap-y-5 md:grid-cols-2">
-        {FIELDS.map((field) => (
-          <TextField
-            key={field.name}
-            id={field.name}
-            name={field.name}
-            label={field.label}
-            type={field.type}
-            autoComplete={field.autoComplete}
-            value={value[field.name]}
-            readOnly={!isEditing}
-            required={isEditing}
-            onChange={(event) => onChange(field.name, event.target.value)}
-          />
-        ))}
+      {errorMessage ? (
+        <p role="alert" className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+          {errorMessage}
+        </p>
+      ) : null}
+
+      <div className="mt-4 overflow-hidden rounded-xl ring-1 ring-sena-dark/10">
+        <table className="w-full text-sm">
+          <tbody>
+            {ROWS.map((row) => {
+              const display = value[row.name] || 'Sin registrar'
+              const canEdit = isEditing && row.editable
+
+              return (
+                <tr key={row.name} className="border-b border-sena-dark/10 last:border-b-0">
+                  <th
+                    scope="row"
+                    className="w-[38%] bg-sena-muted/80 px-4 py-3 text-left font-medium text-sena-text/75"
+                  >
+                    {row.label}
+                  </th>
+                  <td className="px-4 py-2.5 text-sena-text">
+                    {canEdit ? (
+                      <input
+                        id={row.name}
+                        name={row.name}
+                        type={row.type ?? 'text'}
+                        value={value[row.name]}
+                        required
+                        onChange={(event) => onChange(row.name, event.target.value)}
+                        className="h-9 w-full rounded-md border border-sena/30 bg-white px-2.5 outline-none focus:border-sena focus:ring-2 focus:ring-sena/20"
+                      />
+                    ) : (
+                      <span className={value[row.name] ? '' : 'text-sena-text/45'}>{display}</span>
+                    )}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
 
-      <div className="mt-8 flex justify-end">
-        <Button type="submit" disabled={!isEditing}>
-          Guardar
-        </Button>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {isEditing ? (
+          <>
+            <Button type="submit" disabled={isSaving}>
+              {isSaving ? 'Guardando…' : 'Guardar'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={onCancel} disabled={isSaving}>
+              Cancelar
+            </Button>
+          </>
+        ) : (
+          <Button type="button" onClick={onEdit}>
+            Editar
+          </Button>
+        )}
       </div>
     </form>
   )
