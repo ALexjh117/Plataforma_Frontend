@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme {
+  --color-sena: #00a651;
+  --color-sena-dark: #004623;
+  --color-sena-forest: #013318;
+  --color-sena-orange: #f7931e;
+  --color-sena-muted: #f4f6fb;
+  --color-sena-text: #212519;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
 #root {
   max-width: 100%;
   min-height: 100svh;
@@ -6,4 +22,13 @@
 body {
   margin: 0;
 }
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
+.app-shell {
+  font-family: var(--font-sans);
+  color: var(--color-sena-text);
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+}
