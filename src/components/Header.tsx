@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const navigation = [
   { label: 'Inicio', href: '#inicio', active: true },
   { label: 'Oferta de formación', href: '#oferta' },
@@ -38,8 +40,8 @@ export default function Header() {
         ))}
       </nav>
 
-      <a
-        href="#login"
+      <Link
+        to="/perfil"
         className="flex h-[54px] shrink-0 items-center gap-3 rounded-full bg-[#0b925f] px-[26px] text-[17px] font-bold text-white shadow-sm transition hover:brightness-105"
       >
         <svg
@@ -75,7 +77,7 @@ export default function Header() {
         </svg>
 
         <span>Iniciar sesión</span>
-      </a>
+      </Link>
     </header>
   )
 }

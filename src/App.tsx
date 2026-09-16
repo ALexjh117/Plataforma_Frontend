@@ -1,7 +1,16 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
-  return <Dashboard />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/perfil" element={<ProfilePage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App
