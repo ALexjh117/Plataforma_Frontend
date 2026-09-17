@@ -10,6 +10,13 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  // Impide que Vite cargue un postcss.config / Tailwind 3 de fuera del repo.
+  // Eso dispara: "@layer base is used but no matching @tailwind base directive is present".
+  css: {
+    postcss: {
+      plugins: [],
+    },
+  },
   server: {
     proxy: {
       '/api': {
