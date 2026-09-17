@@ -1,5 +1,18 @@
 # React + TypeScript + Vite
 
+## Requisitos (obligatorio)
+
+Este repo y el backend (`Plataformaback`) usan **la misma** versión de Node. Detalle y el porqué: [`docs/node.md`](docs/node.md).
+
+```bash
+nvm install 24.21.0
+nvm use          # lee .nvmrc → v24.21.0
+node -v          # v24.21.0
+npm -v           # 11.19.0
+npm ci
+npm run dev
+```
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:

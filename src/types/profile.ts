@@ -51,3 +51,24 @@ export type RoleDetail = Role & {
   moduleIds: number[]
   tree: ModuleNode[]
 }
+
+export type ManagedUser = {
+  id: number
+  fullName: string
+  nombres: string
+  apellidos: string
+  documentType: string
+  documentId: string
+  email: string
+  role: string
+  roleId: number
+  trainingCenter: string
+  trainingCenterId: number
+  location: string
+  active: boolean
+}
+
+export type UserFormOptions = {
+  roles: Array<{ id: number; name: string }>
+  centers: Array<{ id: number; name: string; regional: string }>
+}

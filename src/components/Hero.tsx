@@ -2,27 +2,22 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-[510px] overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: "url('/img/imageninicio.jpg')",
-      }}
+      className="relative min-h-[520px] overflow-hidden bg-cover bg-center bg-no-repeat lg:min-h-[560px]"
+      style={{ backgroundImage: "url('/img/imageninicio.jpg')" }}
     >
-      {/* Degradado más suave para que se vea claramente la chica */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#003b29]/88 via-[#003b29]/42 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#05331f] via-[#05331f]/72 to-transparent" />
 
-      <div className="relative z-10 flex min-h-[510px] items-center px-[78px] py-12">
-        <div className="max-w-[570px]">
-          <h1 className="text-[50px] font-extrabold leading-[1.02] tracking-[-2px] text-white lg:text-[58px]">
+      <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1280px] items-center px-5 py-14 lg:min-h-[560px] lg:px-10">
+        <div className="max-w-[560px]">
+          <h1 className="text-[40px] font-extrabold leading-[1.08] tracking-tight text-white sm:text-[52px] lg:text-[58px]">
             El SENA
             <br />
             forma personas,
             <br />
-            <span className="inline-block rounded-[9px] bg-[#079447] px-2 py-0.5">
-              transforma vidas
-            </span>
+            <span className="text-[#5FE36A]">transforma vidas</span>
           </h1>
 
-          <p className="mt-5 max-w-[555px] text-[20px] leading-[1.38] text-white">
+          <p className="mt-5 max-w-[520px] text-[17px] leading-[1.5] text-white/95 sm:text-[19px]">
             Somos una entidad del Estado que ofrece formación profesional
             gratuita y de calidad para el trabajo, la formación y el desarrollo
             del país.
@@ -30,10 +25,10 @@ export default function Hero() {
 
           <a
             href="#oferta"
-            className="mt-6 inline-flex h-[60px] items-center rounded-[14px] bg-[#ff9811] px-8 text-[20px] font-bold text-white shadow-md transition hover:brightness-105"
+            className="mt-7 inline-flex h-[52px] items-center rounded-full bg-[#f7931e] px-7 text-[17px] font-bold text-white shadow-md transition hover:brightness-105"
           >
-            <span>Conoce nuestra oferta</span>
-            <span className="ml-4 text-[28px] leading-none">→</span>
+            Conoce nuestra oferta
+            <span className="ml-3 text-[22px] leading-none">→</span>
           </a>
         </div>
       </div>

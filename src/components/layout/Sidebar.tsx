@@ -1,9 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { APP_NAV } from '../../constants/navigation'
 import { useAuth } from '../../lib/auth'
+import { grantedModuleLinks, toNavIcon } from '../../lib/access'
 import { cn } from '../../lib/cn'
 import { CloseIcon, LogoutIcon, NavIcon } from '../icons/AppIcons'
 import SenaMark from '../icons/SenaMark'
+import type { NavIconName } from '../../constants/navigation'
 
 type SidebarProps = {
   isOpen: boolean
@@ -16,7 +17,7 @@ const itemClass =
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { logout, modules, isAdmin } = useAuth()
   const navigate = useNavigate()
-  const allowedCodes = new Set(modules.map((item) => item.code))
+  const granted = grantedModuleLinks(modules)
 
   return (
     <aside
@@ -49,57 +50,26 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       </div>
 
       <nav className="flex flex-1 flex-col gap-1 px-3 pt-2">
-        {APP_NAV.map((item) => {
-          const icon = <NavIcon name={item.icon} className="size-[1.15rem] shrink-0" />
-          const hasRoute = 'to' in item && Boolean(item.to)
-          const allowedByApi = allowedCodes.has(item.id)
-
-          if (!hasRoute) {
-            return (
-              <span
-                key={item.id}
-                title={allowedByApi ? 'Sin ruta en el frontend' : 'Módulo en construcción'}
-                className={cn(itemClass, 'cursor-default text-white/80')}
-              >
-                {icon}
-                {item.label}
-              </span>
-            )
-          }
-
-          return (
-            <NavLink
-              key={item.id}
-              to={item.to}
-              end
-              onClick={onClose}
-              className={({ isActive }) =>
-                cn(
-                  itemClass,
-                  isActive ? 'bg-white/15 text-white' : 'text-white/85 hover:bg-white/10 hover:text-white',
-                )
-              }
-            >
-              {icon}
-              {item.label}
-            </NavLink>
-          )
-        })}
+        <SideLink to="/inicio" icon="home" onClose={onClose}>
+          Inicio
+        </SideLink>
+        {granted.map((item) => (
+          <SideLink key={item.to} to={item.to as string} icon={toNavIcon(item.icon)} onClose={onClose}>
+            {item.label}
+          </SideLink>
+        ))}
+        <SideLink to="/perfil" icon="user" onClose={onClose}>
+          Mi perfil
+        </SideLink>
         {isAdmin ? (
-          <NavLink
-            to="/perfiles"
-            end
-            onClick={onClose}
-            className={({ isActive }) =>
-              cn(
-                itemClass,
-                isActive ? 'bg-white/15 text-white' : 'text-white/85 hover:bg-white/10 hover:text-white',
-              )
-            }
-          >
-            <NavIcon name="user" className="size-[1.15rem] shrink-0" />
-            Perfiles
-          </NavLink>
+          <>
+            <SideLink to="/usuarios" icon="settings" onClose={onClose}>
+              Usuarios
+            </SideLink>
+            <SideLink to="/perfiles" icon="user" onClose={onClose}>
+              Perfiles
+            </SideLink>
+          </>
         ) : null}
       </nav>
 
@@ -119,5 +89,34 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </button>
       </div>
     </aside>
+  )
+}
+
+function SideLink({
+  to,
+  icon,
+  onClose,
+  children,
+}: {
+  to: string
+  icon: NavIconName
+  onClose: () => void
+  children: string
+}) {
+  return (
+    <NavLink
+      to={to}
+      end
+      onClick={onClose}
+      className={({ isActive }) =>
+        cn(
+          itemClass,
+          isActive ? 'bg-white/15 text-white' : 'text-white/85 hover:bg-white/10 hover:text-white',
+        )
+      }
+    >
+      <NavIcon name={icon} className="size-[1.15rem] shrink-0" />
+      {children}
+    </NavLink>
   )
 }

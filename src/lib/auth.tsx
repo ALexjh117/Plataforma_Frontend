@@ -5,6 +5,7 @@ import type { AppModule, UserProfile } from '../types/profile'
 type LoginInput = {
   usuario: string
   password: string
+  remember?: boolean
 }
 
 type AuthContextValue = {
@@ -75,16 +76,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       modules,
       isReady,
       isAdmin: user?.role === 'Administrador',
-      login: async ({ usuario, password }) => {
+      login: async ({ usuario, password, remember = true }) => {
         const payload = usuario.includes('@') ? { email: usuario, password } : { usuario, password }
         const result = await api<{ token: string; user: UserProfile }>('/auth/login', {
           method: 'POST',
           body: JSON.stringify(payload),
         })
-        setToken(result.token)
+        setToken(result.token, remember)
+        const allowed = await api<AppModule[]>('/modules')
         setTokenState(result.token)
         setUser(result.user)
-        const allowed = await api<AppModule[]>('/modules')
         setModules(allowed)
       },
       logout: async () => {
